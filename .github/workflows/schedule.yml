@@ -1,1 +1,32 @@
+name: Run Scheduled Colab Notebook
 
+on:
+  schedule:
+    - cron: "0 12 * * *"  # Every day at 12:00 UTC
+  workflow_dispatch:      # Allows manual triggering
+
+jobs:
+  run-notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install nbconvert nbformat ipykernel jupyter
+
+    - name: Run notebook
+      run: |
+        jupyter nbconvert --to notebook --execute my_script.ipynb --output executed_notebook.ipynb
+    - name: Upload output
+      uses: actions/upload-artifact@v3
+      with:
+        name: result-files
+        path: ./output_folder/  # Adjust path to your outputs
