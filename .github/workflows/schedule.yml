@@ -1,8 +1,6 @@
-name: Run Scheduled Colab Notebook
+name: Run and Save Excel File
 
 on:
-  schedule:
-    - cron: "0 12 * * *"
   workflow_dispatch:
 
 jobs:
@@ -20,20 +18,23 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install nbconvert nbformat ipykernel jupyter openpyxl
+        pip install nbconvert nbformat ipykernel jupyter openpyxl pandas
 
-    - name: Run notebook
+    - name: Execute notebook
       run: |
-        jupyter nbconvert --to notebook --execute Untitled2.ipynb \
+        jupyter nbconvert --to notebook --execute vjezbe_githubom/Untitled2.ipynb \
           --output executed_notebook.ipynb \
           --ExecutePreprocessor.timeout=300 \
           --ExecutePreprocessor.allow_errors=True
 
-    - name: Upload output notebook
-      uses: actions/upload-artifact@v4
-      with:
-        name: executed-notebook
-        path: executed_notebook.ipynb
+    - name: Confirm file was created
+      run: |
+        ls -l vjezbe_githubom/.github/workflows/output_folder
+
+
+
+
+
 
 
 
