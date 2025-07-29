@@ -24,7 +24,7 @@ jobs:
 
     - name: Run notebook
       run: |
-        jupyter nbconvert --to notebook --execute my_script.ipynb --output executed_notebook.ipynb
+        jupyter nbconvert --to notebook --execute Untitled2.ipynb --output executed_notebook.ipynb
     - name: Upload output
       uses: actions/upload-artifact@v3
       with:
